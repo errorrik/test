@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    .block {
+        border: 1px solid #888;
+    }
+    .yes {border: 2px solid green; color: #fff; background: green;}
+    .no {border: 2px solid red; color: #fff; background: red;}
+    </style>
+</head>
+<body>
+    <div id="by-html" class="block"><script type="text/x-san" id="by-html-script"></script></div>
+    <div id="by-js" class="block"></div>
+    <div id="by-js-headfeff" class="block"></div>
+    <div id="by-js-tailfeff" class="block"></div>
+    <div id="by-js-rmfeff" class="block"></div>
+
+    <div>
+        <span id="by-html-result">by html</span>
+        <span id="by-js-result">by js</span>
+        <span id="by-js-headfeff-result">by js headfeff</span>
+        <span id="by-js-tailfeff-result">by js tailfeff</span>
+        <span id="by-js-rmfeff-result">by js rm feff</span>
+    </div>
+
+    <script>
+    function testByJS() {
+        document.getElementById('by-js').innerHTML = '<script type="text/x-san" id="by-js-script"><\/script>';
+        document.getElementById('by-js-result').className = 
+            document.getElementById('by-js-script')
+                ? 'yes'
+                : 'no';
+    }
+
+    function testByJSHeadFEFF() {
+        document.getElementById('by-js-headfeff').innerHTML = '\uFEFF<script type="text/x-san" id="by-js-headfeff-script"><\/script>';
+        document.getElementById('by-js-headfeff-result').className = 
+            document.getElementById('by-js-headfeff-script')
+                ? 'yes'
+                : 'no';
+    }
+
+    function testByJSTailFEFF() {
+        document.getElementById('by-js-tailfeff').innerHTML = '<script type="text/x-san" id="by-js-tailfeff-script"><\/script>\uFEFF';
+        document.getElementById('by-js-tailfeff-result').className = 
+            document.getElementById('by-js-tailfeff-script')
+                ? 'yes'
+                : 'no';
+    }
+
+    function testByJSRmFEFF() {
+        document.getElementById('by-js-rmfeff').innerHTML = '\uFEFF<script type="text/x-san" id="by-js-rmfeff-script"><\/script>';
+        document.getElementById('by-js-rmfeff').removeChild(document.getElementById('by-js-rmfeff').firstChild)
+        document.getElementById('by-js-rmfeff-result').className = 
+            document.getElementById('by-js-rmfeff-script')
+                ? 'yes'
+                : 'no';
+    }
+
+
+    function testByHTML() {
+        document.getElementById('by-html-result').className = 
+            document.getElementById('by-html-script')
+                ? 'yes'
+                : 'no';
+    }
+
+    
+
+    testByHTML();
+    testByJS();
+    testByJSHeadFEFF();
+    testByJSTailFEFF();
+    testByJSRmFEFF();
+    </script>
+</body>
+</html>
